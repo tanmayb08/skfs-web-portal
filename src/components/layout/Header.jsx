@@ -91,18 +91,20 @@ export function Header() {
 
                     {/* 🔗 CONTACT LINK */}
                     <Link
-                        href="/contact"
+                        href="/contact-us"
                         className="text-gray-900 font-medium hover:text-orange-500 transition-colors"
                     >
                         Contact
                     </Link>
 
                     {/* Call-to-action button */}
+                    <Link href="/contact-us">
                     <button
                         className="bg-orange-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors"
                     >
                         Request Quote
                     </button>
+                </Link>    
                 </nav>
             </div>
         </header>

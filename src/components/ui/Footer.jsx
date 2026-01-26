@@ -6,7 +6,6 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         {/* Main Footer Content */}
         <div className="flex flex-wrap justify-start gap-16 mb-10">
-          
           {/* Brand Section */}
           <div className="flex-1 min-w-[250px] space-y-4">
             <div className="flex items-center gap-3">
@@ -27,12 +26,36 @@ export default function Footer() {
           <div className="min-w-[150px]">
             <h3 className="text-[#10b981] font-semibold mb-6">Quick Links</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link href="#" className="hover:underline transition">Our Store</Link></li>
-              <li><Link href="#" className="hover:underline transition">Clients</Link></li>
-              <li><Link href="#" className="hover:underline transition">Projects</Link></li>
-              <li><Link href="#" className="hover:underline transition">Media</Link></li>
-              <li><Link href="#" className="hover:underline transition">Blogs</Link></li>
-              <li><Link href="#" className="hover:underline transition">Testimonial</Link></li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Our Store
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Clients
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Media
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Blogs
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Testimonial
+                </Link>
+              </li>
               <li className="pt-2">
                 <Link
                   href="/admin"
@@ -48,22 +71,58 @@ export default function Footer() {
           <div className="min-w-[180px]">
             <h3 className="text-[#10b981] font-semibold mb-6">Our Products</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link href="#" className="hover:underline transition">Bed Room</Link></li>
-              <li><Link href="#" className="hover:underline transition">Living Room</Link></li>
-              <li><Link href="#" className="hover:underline transition">Dining Room</Link></li>
-              <li><Link href="#" className="hover:underline transition">Accent Furniture</Link></li>
-              <li><Link href="#" className="hover:underline transition">Sofa</Link></li>
-              <li><Link href="#" className="hover:underline transition">Outdoor</Link></li>
-              <li><Link href="#" className="hover:underline transition">Antique Furniture</Link></li>
-              <li><Link href="#" className="hover:underline transition">Home Decor</Link></li>
-              <li><Link href="#" className="hover:underline transition">Chandeliers</Link></li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Bed Room
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Living Room
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Dining Room
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Accent Furniture
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Sofa
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Outdoor
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Antique Furniture
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Home Decor
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:underline transition">
+                  Chandeliers
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Reach Us Section */}
           <div className="flex-1 min-w-[300px] space-y-4">
             <h3 className="text-[#10b981] font-semibold mb-6">Reach Us</h3>
-            
+
             {/* Google Maps Embed Box */}
             <div className="w-full h-40 rounded-lg overflow-hidden border border-gray-700">
               <iframe
@@ -95,7 +154,6 @@ export default function Footer() {
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Bottom Copyright */}

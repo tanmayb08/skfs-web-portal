@@ -58,7 +58,7 @@ export default function Footer() {
               </li>
               <li className="pt-2">
                 <Link
-                  href="/admin"
+                  href="/admin/login"
                   className="inline-block px-4 py-1.5 border border-gray-500 rounded text-xs hover:bg-white hover:text-black transition"
                 >
                   Admin Login

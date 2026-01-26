@@ -10,9 +10,53 @@ const poppins = Poppins({
 
 export default function RequestQuotePage() {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    furnitureType: "",
+    roomType: "",
+    roomSize: "",
+    budget: "",
+    requirements: ""
+  });
+
+  const handleSubmit = () => {
+    // Basic validation
+    if (!formData.name || !formData.contact || !formData.furnitureType || !formData.budget) {
+      alert("Please fill in all required fields marked with *");
+      return;
+    }
+
+    // Create quote object
+    const newQuote = {
+      id: Date.now(),
+      date: new Date().toLocaleDateString(),
+      status: "New",
+      ...formData
+    };
+
+    // Save to localStorage
+    const existingQuotes = JSON.parse(localStorage.getItem("skfs_quotes") || "[]");
+    localStorage.setItem("skfs_quotes", JSON.stringify([newQuote, ...existingQuotes]));
+
+    setSubmitted(true);
+    // Reset form
+    setFormData({
+      name: "",
+      contact: "",
+      furnitureType: "",
+      roomType: "",
+      roomSize: "",
+      budget: "",
+      requirements: ""
+    });
+
+    // Hide success message after 3 seconds
+    setTimeout(() => setSubmitted(false), 5000);
+  };
 
   return (
-    <div className={`${poppins.className} min-h-screen bg-white px-4 py-10`}>
+    <div className={`${poppins.className} bg-white px-4 py-10`}>
       {/* HEADER */}
       <h1 className="text-3xl font-semibold text-center mb-2">
         Request a Quote
@@ -23,7 +67,7 @@ export default function RequestQuotePage() {
       </p>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        
+
         {/* LEFT CARD */}
         <div className="bg-white border rounded-xl p-6 shadow-sm">
           <h3 className="font-semibold text-sm mb-1">Your Requirements</h3>
@@ -37,6 +81,8 @@ export default function RequestQuotePage() {
               <input
                 placeholder="Your full name"
                 className="w-full bg-gray-100 rounded-md px-3 py-2 outline-none"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
             </div>
 
@@ -45,13 +91,19 @@ export default function RequestQuotePage() {
               <input
                 placeholder="+91 98765 43210"
                 className="w-full bg-gray-100 rounded-md px-3 py-2 outline-none"
+                value={formData.contact}
+                onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
               />
             </div>
 
             <div>
               <label className="font-medium block mb-1">Furniture Type *</label>
-              <select className="w-full bg-gray-100 rounded-md px-3 py-2">
-                <option>Select furniture type</option>
+              <select
+                className="w-full bg-gray-100 rounded-md px-3 py-2"
+                value={formData.furnitureType}
+                onChange={(e) => setFormData({ ...formData, furnitureType: e.target.value })}
+              >
+                <option value="">Select furniture type</option>
                 <option>Bed</option>
                 <option>Sofa</option>
                 <option>Wardrobe</option>
@@ -63,8 +115,12 @@ export default function RequestQuotePage() {
 
             <div>
               <label className="font-medium block mb-1">Room Type</label>
-              <select className="w-full bg-gray-100 rounded-md px-3 py-2">
-                <option>Select room type (optional)</option>
+              <select
+                className="w-full bg-gray-100 rounded-md px-3 py-2"
+                value={formData.roomType}
+                onChange={(e) => setFormData({ ...formData, roomType: e.target.value })}
+              >
+                <option value="">Select room type (optional)</option>
                 <option>Bedroom</option>
                 <option>Living Room</option>
                 <option>Kitchen</option>
@@ -77,13 +133,19 @@ export default function RequestQuotePage() {
               <input
                 placeholder="e.g. 10x12 feet"
                 className="w-full bg-gray-100 rounded-md px-3 py-2 outline-none"
+                value={formData.roomSize}
+                onChange={(e) => setFormData({ ...formData, roomSize: e.target.value })}
               />
             </div>
 
             <div>
               <label className="font-medium block mb-1">Budget Range *</label>
-              <select className="w-full bg-gray-100 rounded-md px-3 py-2">
-                <option>Select your budget</option>
+              <select
+                className="w-full bg-gray-100 rounded-md px-3 py-2"
+                value={formData.budget}
+                onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+              >
+                <option value="">Select your budget</option>
                 <option>₹50k - ₹1L</option>
                 <option>₹1L - ₹3L</option>
                 <option>₹3L+</option>
@@ -95,6 +157,8 @@ export default function RequestQuotePage() {
               <textarea
                 placeholder="Tell us about your specific needs, preferences, or any special requirements..."
                 className="w-full bg-gray-100 rounded-md px-3 py-2 h-20 resize-none outline-none"
+                value={formData.requirements}
+                onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
               />
             </div>
           </div>
@@ -108,7 +172,7 @@ export default function RequestQuotePage() {
             </button>
 
             <button
-              onClick={() => setSubmitted(true)}
+              onClick={handleSubmit}
               className="flex-1 bg-orange-600 text-white rounded-md py-2 text-xs font-medium hover:bg-orange-700"
             >
               Submit Quote Request

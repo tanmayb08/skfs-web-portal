@@ -81,6 +81,25 @@
   html,
   body {
     font-family: var(--font-poppins), system-ui, sans-serif;
+    scrollbar-gutter: stable; /* Reserve space for scrollbar to prevent layout shift */
+  }
+
+  /* Custom Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-orange-600);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-orange-700);
   }
 
   *,

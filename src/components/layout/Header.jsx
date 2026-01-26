@@ -1,5 +1,7 @@
 "use client";
 
+// Import useState and useEffect from react
+import { useState, useEffect } from "react";
 // Import search icon from react-icons (Material Design icons library)
 import { MdSearch } from "react-icons/md";
 // Import home icon from react-icons
@@ -13,6 +15,17 @@ import Link from "next/link";
  * ========================================
  */
 export function Header() {
+    const [currentTermIndex, setCurrentTermIndex] = useState(0);
+    const [isFocused, setIsFocused] = useState(false);
+    const searchTerms = ["furniture", "sofa", "bed", "lamps", "dining table", "wardrobe"];
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentTermIndex((prevIndex) => (prevIndex + 1) % searchTerms.length);
+        }, 1000); // Change every 1 second
+
+        return () => clearInterval(intervalId); // Cleanup on unmount
+    }, []);
 
     return (
         <header className="bg-white border-b border-gray-200">
@@ -41,8 +54,10 @@ export function Header() {
                         {/* Search input field */}
                         <input
                             type="text"
-                            placeholder="Search for furniture..."
-                            className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                            placeholder={isFocused ? "" : `Search for ${searchTerms[currentTermIndex]}...`}
+                            onFocus={() => setIsFocused(true)}
+                            onBlur={() => setIsFocused(false)}
+                            className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
                         // TODO: Add onChange handler for search functionality
                         // onChange={(e) => handleSearch(e.target.value)}
                         />
@@ -75,7 +90,7 @@ export function Header() {
 
                     {/* 🔗 SERVICES LINK */}
                     <Link
-                        href="/services"
+                        href="/about-us"
                         className="text-gray-900 font-medium hover:text-orange-500 transition-colors"
                     >
                         Services

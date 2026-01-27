@@ -22,7 +22,7 @@ export function Header() {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentTermIndex((prevIndex) => (prevIndex + 1) % searchTerms.length);
-        }, 1000); // Change every 1 second
+        }, 4000); // Change every 4 seconds
 
         return () => clearInterval(intervalId); // Cleanup on unmount
     }, []);
@@ -114,12 +114,12 @@ export function Header() {
 
                     {/* Call-to-action button */}
                     <Link href="/contact-us">
-                    <button
-                        className="bg-orange-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors"
-                    >
-                        Request Quote
-                    </button>
-                </Link>    
+                        <button
+                            className="bg-orange-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+                        >
+                            Request Quote
+                        </button>
+                    </Link>
                 </nav>
             </div>
         </header>

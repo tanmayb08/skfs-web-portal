@@ -221,7 +221,7 @@ const Stat = ({ num, label }) => {
         if (!isVisible) return;
 
         let start = 0;
-        const duration = 1000; // 1 second
+        const duration = 2500; // 2.5 seconds
         const incrementTime = 20; // Update every 20ms
         const steps = duration / incrementTime;
         const increment = targetNumber / steps;

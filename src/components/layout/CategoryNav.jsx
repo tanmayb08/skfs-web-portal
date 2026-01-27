@@ -155,8 +155,8 @@ export function CategoryNav() {
 
     return (
         <div className="relative">
-            {/* Category navigation bar with turquoise background */}
-            <nav className="bg-[#00CCC0] text-white">
+            {/* Category navigation bar with brown background */}
+            <nav className="bg-[#8B6E4E] text-white">
                 <div className="container mx-auto px-4">
                     {/* Flex container to distribute categories evenly */}
                     <div className="flex items-center justify-around">
@@ -175,7 +175,7 @@ export function CategoryNav() {
                                     onMouseEnter={() => setActiveCategory(category.id)}
                                     onMouseLeave={() => setActiveCategory(null)}
                                 >
-                                    <button className="flex flex-col items-center gap-2 py-4 px-4 hover:bg-[#00B8AD] transition-colors">
+                                    <button className="flex flex-col items-center gap-2 py-4 px-4 hover:bg-[#6F583E] transition-colors">
                                         <Icon className="w-6 h-6" />
                                         <span className="text-sm font-medium whitespace-nowrap">
                                             {category.name}
@@ -195,10 +195,10 @@ export function CategoryNav() {
                                                     <Link
                                                         key={subIndex}
                                                         href="#"
-                                                        className="flex items-center justify-between px-4 py-1 text-[#00CCC0] hover:bg-gray-50 transition-colors group"
+                                                        className="flex items-center justify-between px-4 py-1 text-[#8B6E4E] hover:bg-gray-50 transition-colors group"
                                                     >
                                                         <span className="font-medium">{subcategory}</span>
-                                                        <MdChevronRight className="w-4 h-4 text-gray-400 group-hover:text-[#00CCC0]" />
+                                                        <MdChevronRight className="w-4 h-4 text-gray-400 group-hover:text-[#8B6E4E]" />
                                                     </Link>
                                                 ))}
                                             </div>

@@ -121,12 +121,36 @@ export default function App() {
                 <h2 className="text-center text-3xl font-bold mb-10">Why Choose Us?</h2>
 
                 <div className="grid md:grid-cols-3 gap-6">
-                    <Feature icon={Award} title="Custom Design" />
-                    <Feature icon={CheckCircle} title="Premium Quality" />
-                    <Feature icon={Hammer} title="Expert Craft" />
-                    <Feature icon={Clock} title="On Time" />
-                    <Feature icon={DollarSign} title="Affordable" />
-                    <Feature icon={Phone} title="Support" />
+                    <Feature
+                        icon={Award}
+                        title="Custom Design"
+                        description="Tailored specifically to your style and space requirements."
+                    />
+                    <Feature
+                        icon={CheckCircle}
+                        title="Premium Quality"
+                        description="We use only the finest materials for long-lasting durability."
+                    />
+                    <Feature
+                        icon={Hammer}
+                        title="Expert Craft"
+                        description="Skilled artisans with years of experience in furniture making."
+                    />
+                    <Feature
+                        icon={Clock}
+                        title="On Time"
+                        description="We value your time and ensure timely delivery of all projects."
+                    />
+                    <Feature
+                        icon={DollarSign}
+                        title="Affordable"
+                        description="High-quality furniture at competitive, budget-friendly prices."
+                    />
+                    <Feature
+                        icon={Phone}
+                        title="Support"
+                        description="Dedicated customer support to assist you even after delivery."
+                    />
                 </div>
             </section>
 
@@ -162,13 +186,70 @@ export default function App() {
 }
 
 /* ---------------- HELPERS ---------------- */
+// the count effect starts here
+const Stat = ({ num, label }) => {
+    const [count, setCount] = useState(0);
+    const [isVisible, setIsVisible] = useState(false);
+    const ref = React.useRef(null); // Use React.useRef to avoid "useRef is not defined" if not imported
 
-const Stat = ({ num, label }) => (
-    <div>
-        <h2 className="text-4xl font-bold mb-2">{num}</h2>
-        <p className="text-orange-100">{label}</p>
-    </div>
-);
+    // Parse the number and suffix (e.g., "500+" -> 500 and "+")
+    const targetNumber = parseInt(num.replace(/\D/g, ""), 10);
+    const suffix = num.replace(/[0-9]/g, "");
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.5 } // Trigger when 50% visible
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isVisible) return;
+
+        let start = 0;
+        const duration = 1000; // 1 second
+        const incrementTime = 20; // Update every 20ms
+        const steps = duration / incrementTime;
+        const increment = targetNumber / steps;
+
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= targetNumber) {
+                setCount(targetNumber);
+                clearInterval(timer);
+            } else {
+                setCount(Math.floor(start));
+            }
+        }, incrementTime);
+
+        return () => clearInterval(timer);
+    }, [isVisible, targetNumber]);
+
+    return (
+        <div ref={ref}>
+            <h2 className="text-4xl font-bold mb-2">
+                {count}{suffix}
+            </h2>
+            <p className="text-orange-100">{label}</p>
+        </div>
+    );
+};
+
+// the count effect ends here
 
 const Service = ({ icon: Icon, title }) => (
     <div className="bg-white p-6 rounded shadow text-center">
@@ -177,10 +258,13 @@ const Service = ({ icon: Icon, title }) => (
     </div>
 );
 
-const Feature = ({ icon: Icon, title }) => (
-    <div className="bg-white p-4 rounded shadow flex gap-3">
-        <Icon className="text-orange-500" />
-        <p>{title}</p>
+const Feature = ({ icon: Icon, title, description }) => (
+    <div className="bg-white p-4 rounded shadow flex gap-3 items-start">
+        <Icon className="text-orange-500 mt-1 shrink-0" />
+        <div>
+            <h4 className="font-semibold mb-1">{title}</h4>
+            <p className="text-sm text-gray-600">{description}</p>
+        </div>
     </div>
 );
 

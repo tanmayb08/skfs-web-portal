@@ -90,7 +90,7 @@ export function Header() {
 
                     {/* 🔗 SERVICES LINK */}
                     <Link
-                        href="/about-us"
+                        href="/services"
                         className="text-gray-900 font-medium hover:text-orange-500 transition-colors"
                     >
                         Services

@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Poppins } from "next/font/google";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
 
 export default function RequestQuotePage() {
   const [submitted, setSubmitted] = useState(false);
@@ -56,7 +51,7 @@ export default function RequestQuotePage() {
   };
 
   return (
-    <div className={`${poppins.className} bg-white px-4 py-10`}>
+    <div className="bg-white px-4 py-10">
       {/* HEADER */}
       <h1 className="text-3xl font-semibold text-center mb-2">
         Request a Quote

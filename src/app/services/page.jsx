@@ -107,15 +107,12 @@ export default function ServicesPage() {
   return (
     <div className="services-page-wrapper">
       {/* Poppins Google Font */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
+
 
       <style>{`
         .services-page-wrapper {
           margin: 0;
-          font-family: 'Poppins', sans-serif;
+          margin: 0;
           background: #f7f7f7;
         }
 
@@ -275,7 +272,7 @@ export default function ServicesPage() {
           font-weight: 600;
           border-radius: 8px;
           cursor: pointer;
-          font-family: 'Poppins', sans-serif;
+          cursor: pointer;
         }
 
         .service-white-btn:hover {
@@ -289,7 +286,7 @@ export default function ServicesPage() {
           border: 1px solid #ddd;
           background: #fff;
           cursor: pointer;
-          font-family: 'Poppins', sans-serif;
+          cursor: pointer;
           transition: all 0.25s ease;
           font-size: 0.9rem;
         }
@@ -339,6 +336,7 @@ export default function ServicesPage() {
 
               <div className="service-footer">
                 <span className="service-price">{item.price}</span>
+
                 <Link href="/contact-us" className="service-action-btn inline-block no-underline">Get Quote</Link>
               </div>
             </div>

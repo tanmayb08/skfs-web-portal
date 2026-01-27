@@ -1,5 +1,6 @@
-"use client" ;
+"use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import {
     Bed,
     Armchair,
@@ -49,12 +50,12 @@ const HeroSlider = () => {
                         <p className="mb-6">{s.subtitle}</p>
 
                         <div className="flex gap-3">
-                            <button className="bg-orange-500 px-6 py-2 rounded-full">
+                            <Link href="/contact-us" className="bg-orange-500 px-6 py-2 rounded-full inline-block">
                                 Get Free Quote
-                            </button>
-                            <button className="border px-6 py-2 rounded-full">
+                            </Link>
+                            <Link href="/services" className="border px-6 py-2 rounded-full inline-block">
                                 Explore Services
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -85,9 +86,9 @@ export default function App() {
                         perfectly match your style, space, and budget.
                     </p>
 
-                    <button className="bg-black text-white px-6 py-3 rounded">
+                    <Link href="/contact-us" className="bg-black text-white px-6 py-3 rounded inline-block">
                         Contact Us
-                    </button>
+                    </Link>
                 </div>
 
                 <img src="/images/welcome.jpg" className="rounded-xl shadow" />

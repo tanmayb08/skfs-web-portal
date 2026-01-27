@@ -208,84 +208,95 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Quotes List or Empty State */}
+                {/* Quotes List or Empty State */}
                 {filteredQuotes.length > 0 ? (
-                    <div className="bg-white rounded-xl border border-black/10 overflow-hidden shadow-sm">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm text-left">
-                                <thead className="bg-gray-50 text-gray-600 font-medium border-b border-gray-100">
-                                    <tr>
-                                        <th className="px-6 py-4">Date</th>
-                                        <th className="px-6 py-4">Name</th>
-                                        <th className="px-6 py-4">Contact</th>
-                                        <th className="px-6 py-4">Furniture & Room</th>
-                                        <th className="px-6 py-4">Requirements</th>
-                                        <th className="px-6 py-4">Budget</th>
-                                        <th className="px-6 py-4">Status</th>
-                                        <th className="px-6 py-4 text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-100">
-                                    {filteredQuotes.map((quote) => (
-                                        <tr key={quote.id} className="hover:bg-gray-50 transition-colors">
-                                            <td className="px-6 py-4 text-gray-500 whitespace-nowrap">{quote.date}</td>
-                                            <td className="px-6 py-4 font-medium text-black">
-                                                {quote.name}
-                                            </td>
-                                            <td className="px-6 py-4 text-gray-600">
+                    <div className="grid grid-cols-1 gap-6">
+                        {filteredQuotes.map((quote) => (
+                            <div key={quote.id} className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+                                {/* Header: Name & Status */}
+                                <div className="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h3 className="text-xl font-bold text-gray-900">{quote.name}</h3>
+                                        <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-lg">📞</span>
                                                 {quote.contact}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="text-gray-900 font-medium">{quote.furnitureType}</div>
-                                                <div className="text-xs text-gray-500 flex flex-col gap-0.5">
-                                                    {quote.roomType && <span>Type: {quote.roomType}</span>}
-                                                    {quote.roomSize && <span>Size: {quote.roomSize}</span>}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 max-w-xs">
-                                                <div className="text-gray-600 text-sm truncate" title={quote.requirements}>
-                                                    {quote.requirements || <span className="text-gray-400 italic">None</span>}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-gray-600 whitespace-nowrap">{quote.budget}</td>
-                                            <td className="px-6 py-4">
-                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                                    ${quote.status === 'New' ? 'bg-blue-100 text-blue-800' :
-                                                        quote.status === 'Contacted' ? 'bg-yellow-100 text-yellow-800' :
-                                                            quote.status === 'Finalized' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                                                    {quote.status}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 text-right">
-                                                <div className="flex items-center justify-end gap-2">
-                                                    {quote.status === "New" && (
-                                                        <button
-                                                            onClick={() => updateStatus(quote.id, "Contacted")}
-                                                            className="text-xs text-blue-600 hover:underline"
-                                                        >
-                                                            Mark Contacted
-                                                        </button>
-                                                    )}
-                                                    {quote.status === "Contacted" && (
-                                                        <button
-                                                            onClick={() => updateStatus(quote.id, "Finalized")}
-                                                            className="text-xs text-green-600 hover:underline"
-                                                        >
-                                                            Mark Finalized
-                                                        </button>
-                                                    )}
-                                                    <button
-                                                        onClick={() => deleteQuote(quote.id)}
-                                                        className="text-red-500 hover:bg-red-50 p-1 rounded"
-                                                    >
-                                                        <LogOut className="w-4 h-4 rotate-180" /> {/* Using LogOut icon rotated as delete placeholder if needed, or better import Trash */}
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-lg">📅</span>
+                                                {quote.date}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-3">
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide
+                                            ${quote.status === 'New' ? 'bg-blue-100 text-blue-700' :
+                                                quote.status === 'Contacted' ? 'bg-yellow-100 text-yellow-700' :
+                                                    quote.status === 'Finalized' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+                                            {quote.status}
+                                        </span>
+                                        <button
+                                            onClick={() => deleteQuote(quote.id)}
+                                            className="text-gray-400 hover:text-red-500 transition-colors"
+                                            title="Delete Quote"
+                                        >
+                                            <LogOut className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Details Grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-6 text-sm">
+                                    <div>
+                                        <span className="block text-gray-500 mb-1">Furniture Type</span>
+                                        <span className="block font-semibold text-gray-900 text-base">{quote.furnitureType}</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500 mb-1">Room Type</span>
+                                        <span className="block font-semibold text-gray-900 text-base">{quote.roomType || "-"}</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500 mb-1">Room Size</span>
+                                        <span className="block font-semibold text-gray-900 text-base">{quote.roomSize || "-"}</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500 mb-1">Budget</span>
+                                        <span className="block font-semibold text-gray-900 text-base">{quote.budget}</span>
+                                    </div>
+                                </div>
+
+                                {/* Custom Requirements */}
+                                <div className="mb-6">
+                                    <span className="block text-gray-500 mb-2 text-sm">Custom Requirements</span>
+                                    <div className="bg-gray-50 rounded-lg p-4 text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
+                                        {quote.requirements || "No specific requirements provided."}
+                                    </div>
+                                </div>
+
+                                {/* Update Status Actions */}
+                                <div className="border-t border-gray-100 pt-4">
+                                    <span className="block text-sm font-semibold text-gray-900 mb-3">Update Status:</span>
+                                    <div className="flex flex-wrap gap-3">
+                                        {["New", "Contacted", "Finalized"].map((status) => (
+                                            <button
+                                                key={status}
+                                                onClick={() => updateStatus(quote.id, status)}
+                                                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all
+                                                    ${quote.status === status
+                                                        ? (status === 'New' ? 'bg-blue-600 text-white' :
+                                                            status === 'Contacted' ? 'bg-yellow-500 text-white' :
+                                                                'bg-green-600 text-white shadow-sm')
+                                                        : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                                                    }`}
+                                            >
+                                                {status}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 ) : (
                     <div className="bg-white rounded-xl border border-black/10 py-24 shadow-sm text-center">

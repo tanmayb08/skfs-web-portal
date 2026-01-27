@@ -149,7 +149,9 @@ export default function Footer() {
               </div>
               <div className="flex gap-4 pt-2 text-xl text-gray-400">
                 <i className="ri-facebook-circle-fill cursor-pointer hover:text-[#10b981] transition"></i>
-                <i className="ri-instagram-line cursor-pointer hover:text-[#10b981] transition"></i>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                  <i className="ri-instagram-line cursor-pointer hover:text-[#10b981] transition"></i>
+                </a>
                 <i className="ri-twitter-x-fill cursor-pointer hover:text-[#10b981] transition"></i>
               </div>
             </div>

@@ -39,7 +39,7 @@ export async function saveQuote(
         room_size: roomSize,
         budget_range: budget,
         description: requirements,
-        status: "pending",
+        status: "New",
       },
     ]);
 

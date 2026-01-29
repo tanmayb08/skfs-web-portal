@@ -232,8 +232,11 @@ export function Header() {
 
                     {/* 🔗 CONTACT LINK */}
                     <Link
+
                         href="/contact-us"
                         className="text-lg text-gray-900 font-medium hover:text-orange-500 transition-colors"
+
+
                     >
                         Contact
                     </Link>

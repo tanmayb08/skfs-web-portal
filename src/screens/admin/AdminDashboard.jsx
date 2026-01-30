@@ -1,6 +1,5 @@
 "use client";
 
-import { supabase } from "@/lib/supabase/client";
 import React, { useState } from "react";
 import {
     ArrowLeft,
@@ -8,7 +7,7 @@ import {
     Package,
     Search,
     Filter,
-    ChevronDown,
+    ChevronDown
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,53 +22,6 @@ export default function AdminDashboard() {
 
     // Load quotes from localStorage
     React.useEffect(() => {
-        const fetchQuotes = async () => {
-            const { data, error } = await supabase
-                .from("quotes")
-                .select(
-                    `
-        quote_id,
-        furniture_type,
-        room_type,
-        room_size,
-        budget_range,
-        description,
-        status,
-        created_on,
-        users (
-          name,
-          contact
-        )
-      `,
-                )
-                .order("created_on", { ascending: false });
-
-            if (error) {
-                console.error("Error fetching quotes:", error);
-                return;
-            }
-
-            // reshape data to match your UI
-            const formattedQuotes = data.map((q) => ({
-                id: q.quote_id,
-                name: q.users?.name,
-                contact: q.users?.contact,
-                furnitureType: q.furniture_type,
-                roomType: q.room_type,
-                roomSize: q.room_size,
-                budget: q.budget_range,
-                requirements: q.description,
-                status: q.status,
-                date: new Date(q.created_on).toLocaleDateString(),
-            }));
-
-            console.log(formattedQuotes);
-
-            setQuotes(formattedQuotes);
-        };
-
-        fetchQuotes();
-    }, []);
             const fetchQuotes = async () => {
                 const { data, error } = await supabase
                     .from("quotes")
@@ -120,20 +72,6 @@ export default function AdminDashboard() {
 
     // Update quote status
     const updateStatus = async (id, newStatus) => {
-        const { error } = await supabase
-            .from("quotes")
-            .update({ status: newStatus })
-            .eq("quote_id", id);
-        if (error) {
-            alert("Failed to update status");
-            return;
-        }
-
-        setQuotes((prev) =>
-            prev.map((q) => (q.id === id ? { ...q, status: newStatus } : q)),
-        );
-    };
-    const updateStatus = async (id, newStatus) => {
             const { error } = await supabase
                 .from("quotes")
                 .update({ status: newStatus })
@@ -149,24 +87,6 @@ export default function AdminDashboard() {
         };
 
     // Delete quote
-    const deleteQuote = async (id) => {
-        if (!confirm("Are you sure you want to delete this quote?")) return;
-
-        const { error } = await supabase
-            .from("quotes")
-            .delete()
-            .eq("quote_id", id);
-
-        if (error) {
-            alert("Failed deleting quote");
-            return;
-        }
-
-        setQuotes((prev) => prev.filter((q) => q.id != id));
-    };
-
-    const handleLogout = () => {
-        router.push("/");
     const deleteQuote = async (id) => {
             if (!confirm("Are you sure you want to delete this quote?")) return;
     
@@ -250,19 +170,13 @@ export default function AdminDashboard() {
     // Filter quotes based on search and status
     // Filter quotes based on search and status
     const filteredQuotes = (quotes || []).filter((quote) => {
-    const filteredQuotes = (quotes || []).filter((quote) => {
         const searchLower = searchTerm.toLowerCase().trim();
 
         if (!searchLower)
             return (
                 statusFilter === "All Status" || quote.status === statusFilter
             );
-        if (!searchLower)
-            return (
-                statusFilter === "All Status" || quote.status === statusFilter
-            );
 
-        const matchesSearch =
         const matchesSearch =
             (quote.name?.toLowerCase() || "").includes(searchLower) ||
             (quote.contact?.toLowerCase() || "").includes(searchLower) ||
@@ -270,10 +184,7 @@ export default function AdminDashboard() {
             (quote.roomType?.toLowerCase() || "").includes(searchLower) ||
             (quote.roomSize?.toLowerCase() || "").includes(searchLower) ||
             (quote.requirements?.toLowerCase() || "").includes(searchLower);
-            (quote.requirements?.toLowerCase() || "").includes(searchLower);
 
-        const matchesStatus =
-            statusFilter === "All Status" || quote.status === statusFilter;
         const matchesStatus =
             statusFilter === "All Status" || quote.status === statusFilter;
 
@@ -294,12 +205,6 @@ export default function AdminDashboard() {
                             Back to Home
                         </Link>
                         <div>
-                            <h1 className="text-4xl font-bold text-black mb-2">
-                                Admin Dashboard
-                            </h1>
-                            <p className="text-base text-gray-600">
-                                Manage your furniture quote requests
-                            </p>
                             <h1 className="text-4xl font-bold text-black mb-2">
                                 Admin Dashboard
                             </h1>
@@ -328,17 +233,7 @@ export default function AdminDashboard() {
                             <span className="text-sm text-gray-600 mb-1">
                                 {stat.label}
                             </span>
-                        <div
-                            key={index}
-                            className="bg-white rounded-xl border border-black/10 p-6 shadow-sm flex flex-col"
-                        >
-                            <span className="text-sm text-gray-600 mb-1">
-                                {stat.label}
-                            </span>
                             <div className="flex items-center justify-between mt-auto">
-                                <span
-                                    className={`text-3xl font-bold ${stat.color || "text-black"}`}
-                                >
                                 <span
                                     className={`text-3xl font-bold ${stat.color || "text-black"}`}
                                 >
@@ -357,9 +252,6 @@ export default function AdminDashboard() {
                             <label className="text-sm font-medium text-black">
                                 Search
                             </label>
-                            <label className="text-sm font-medium text-black">
-                                Search
-                            </label>
                             <div className="relative">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                 <input
@@ -367,9 +259,6 @@ export default function AdminDashboard() {
                                     placeholder="Search by name, contact, or furniture type..."
                                     className="w-full h-9 pl-10 pr-3 py-1 bg-[#f3f3f5] border border-transparent rounded-md text-sm md:text-sm outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-normal placeholder:text-gray-400"
                                     value={searchTerm}
-                                    onChange={(e) =>
-                                        setSearchTerm(e.target.value)
-                                    }
                                     onChange={(e) =>
                                         setSearchTerm(e.target.value)
                                     }
@@ -381,14 +270,8 @@ export default function AdminDashboard() {
                             <label className="text-sm font-medium text-black">
                                 Filter by Status
                             </label>
-                            <label className="text-sm font-medium text-black">
-                                Filter by Status
-                            </label>
                             <div className="relative">
                                 <button
-                                    onClick={() =>
-                                        setIsFilterOpen(!isFilterOpen)
-                                    }
                                     onClick={() =>
                                         setIsFilterOpen(!isFilterOpen)
                                     }
@@ -398,9 +281,6 @@ export default function AdminDashboard() {
                                         <Filter className="w-4 h-4 mr-2 text-gray-500" />
                                         <span>{statusFilter}</span>
                                     </div>
-                                    <ChevronDown
-                                        className={`w-4 h-4 opacity-50 transition-transform ${isFilterOpen ? "rotate-180" : ""}`}
-                                    />
                                     <ChevronDown
                                         className={`w-4 h-4 opacity-50 transition-transform ${isFilterOpen ? "rotate-180" : ""}`}
                                     />
@@ -415,7 +295,6 @@ export default function AdminDashboard() {
                                                     setStatusFilter(status);
                                                     setIsFilterOpen(false);
                                                 }}
-                                                className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${statusFilter === status ? "text-blue-600 font-medium" : "text-gray-700"}`}
                                                 className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${statusFilter === status ? "text-blue-600 font-medium" : "text-gray-700"}`}
                                             >
                                                 {status}
@@ -437,16 +316,9 @@ export default function AdminDashboard() {
                                 key={quote.id}
                                 className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm"
                             >
-                            <div
-                                key={quote.id}
-                                className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm"
-                            >
                                 {/* Header: Name & Status */}
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
-                                        <h3 className="text-xl font-bold text-gray-900">
-                                            {quote.name}
-                                        </h3>
                                         <h3 className="text-xl font-bold text-gray-900">
                                             {quote.name}
                                         </h3>
@@ -455,15 +327,9 @@ export default function AdminDashboard() {
                                                 <span className="text-lg">
                                                     📞
                                                 </span>
-                                                <span className="text-lg">
-                                                    📞
-                                                </span>
                                                 {quote.contact}
                                             </div>
                                             <div className="flex items-center gap-1">
-                                                <span className="text-lg">
-                                                    📅
-                                                </span>
                                                 <span className="text-lg">
                                                     📅
                                                 </span>
@@ -487,26 +353,9 @@ export default function AdminDashboard() {
                                                         : "bg-gray-100 text-gray-700"
                                             }`}
                                         >
-                                        <span
-                                            className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide
-                                            ${
-                                                quote.status === "New"
-                                                    ? "bg-blue-100 text-blue-700"
-                                                    : quote.status ===
-                                                        "Contacted"
-                                                      ? "bg-yellow-100 text-yellow-700"
-                                                      : quote.status ===
-                                                          "Finalized"
-                                                        ? "bg-green-100 text-green-700"
-                                                        : "bg-gray-100 text-gray-700"
-                                            }`}
-                                        >
                                             {quote.status}
                                         </span>
                                         <button
-                                            onClick={() =>
-                                                deleteQuote(quote.id)
-                                            }
                                             onClick={() =>
                                                 deleteQuote(quote.id)
                                             }
@@ -527,20 +376,8 @@ export default function AdminDashboard() {
                                         <span className="block font-semibold text-gray-900 text-base">
                                             {quote.furnitureType}
                                         </span>
-                                        <span className="block text-gray-500 mb-1">
-                                            Furniture Type
-                                        </span>
-                                        <span className="block font-semibold text-gray-900 text-base">
-                                            {quote.furnitureType}
-                                        </span>
                                     </div>
                                     <div>
-                                        <span className="block text-gray-500 mb-1">
-                                            Room Type
-                                        </span>
-                                        <span className="block font-semibold text-gray-900 text-base">
-                                            {quote.roomType || "-"}
-                                        </span>
                                         <span className="block text-gray-500 mb-1">
                                             Room Type
                                         </span>
@@ -555,20 +392,8 @@ export default function AdminDashboard() {
                                         <span className="block font-semibold text-gray-900 text-base">
                                             {quote.roomSize || "-"}
                                         </span>
-                                        <span className="block text-gray-500 mb-1">
-                                            Room Size
-                                        </span>
-                                        <span className="block font-semibold text-gray-900 text-base">
-                                            {quote.roomSize || "-"}
-                                        </span>
                                     </div>
                                     <div>
-                                        <span className="block text-gray-500 mb-1">
-                                            Budget
-                                        </span>
-                                        <span className="block font-semibold text-gray-900 text-base">
-                                            {quote.budget}
-                                        </span>
                                         <span className="block text-gray-500 mb-1">
                                             Budget
                                         </span>
@@ -583,12 +408,7 @@ export default function AdminDashboard() {
                                     <span className="block text-gray-500 mb-2 text-sm">
                                         Custom Requirements
                                     </span>
-                                    <span className="block text-gray-500 mb-2 text-sm">
-                                        Custom Requirements
-                                    </span>
                                     <div className="bg-gray-50 rounded-lg p-4 text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
-                                        {quote.requirements ||
-                                            "No specific requirements provided."}
                                         {quote.requirements ||
                                             "No specific requirements provided."}
                                     </div>
@@ -599,30 +419,7 @@ export default function AdminDashboard() {
                                     <span className="block text-sm font-semibold text-gray-900 mb-3">
                                         Update Status:
                                     </span>
-                                    <span className="block text-sm font-semibold text-gray-900 mb-3">
-                                        Update Status:
-                                    </span>
                                     <div className="flex flex-wrap gap-3">
-                                        {["New", "Contacted", "Finalized"].map(
-                                            (status) => (
-                                                <button
-                                                    key={status}
-                                                    onClick={() =>
-                                                        updateStatus(
-                                                            quote.id,
-                                                            status,
-                                                        )
-                                                    }
-                                                    className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all
-                                                    ${
-                                                        quote.status === status
-                                                            ? status === "New"
-                                                                ? "bg-blue-600 text-white"
-                                                                : status ===
-                                                                    "Contacted"
-                                                                  ? "bg-yellow-500 text-white"
-                                                                  : "bg-green-600 text-white shadow-sm"
-                                                            : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
                                         {["New", "Contacted", "Finalized"].map(
                                             (status) => (
                                                 <button
@@ -649,11 +446,6 @@ export default function AdminDashboard() {
                                                 </button>
                                             ),
                                         )}
-                                                >
-                                                    {status}
-                                                </button>
-                                            ),
-                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -663,13 +455,6 @@ export default function AdminDashboard() {
                     <div className="bg-white rounded-xl border border-black/10 py-24 shadow-sm text-center">
                         <div className="flex flex-col items-center">
                             <Package className="w-16 h-16 text-gray-300 mb-4" />
-                            <h2 className="text-xl font-semibold text-black mb-2">
-                                No quote requests found
-                            </h2>
-                            <p className="text-base text-gray-600">
-                                Quote requests will appear here once customers
-                                submit them
-                            </p>
                             <h2 className="text-xl font-semibold text-black mb-2">
                                 No quote requests found
                             </h2>

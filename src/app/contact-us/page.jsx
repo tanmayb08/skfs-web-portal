@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import SubmitButton from   "@/components/submit-quote-button" 
+import SubmitButton from   "@/components/submit-quote-button";
+import AIQuoteButton from "@/components/ui/AIQuoteButton";
+
+
 
 
 export default function RequestQuotePage() {
   const [submitted, setSubmitted] = useState(false);
+  const [aiQuote, setAiQuote] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     contact: "",
@@ -160,25 +165,26 @@ export default function RequestQuotePage() {
           </div>
 
           <div className="flex gap-3 mt-6">
-            <button
-              onClick={() => alert("AI Suggestions generated")}
-              className="flex-1 border rounded-md py-2 text-xs font-medium hover:bg-gray-50"
-            >
-              ✨ Get AI Suggestions
-            </button>
+  <div className="flex-1">
+    <AIQuoteButton
+  formData={formData}
+  onQuote={(quote) => setAiQuote(quote)}
+/>
 
-          
-          <SubmitButton formData={formData} />
-              
+  </div>
 
-    
+  <div className="flex-1">
+    <SubmitButton formData={formData} />
+  </div>
+</div>
+
             {/*<button
               onClick={handleSubmit}
               className="flex-1 bg-sky-600 text-white rounded-md py-2 text-xs font-medium hover:bg-sky-700"
             >
               Submit Quote Request
             </button>*/}
-          </div>
+          
 
           {submitted && (
             <div className="mt-4 bg-green-50 border border-green-200 text-green-800 text-xs rounded-md p-3">
@@ -223,6 +229,60 @@ export default function RequestQuotePage() {
           <p className="text-[11px] text-gray-600 mt-5">
             Fill in the form and click <b>“Get AI Suggestions”</b> to receive personalized recommendations!
           </p>
+          {aiQuote && (
+  <div
+    id="ai-quote-card"
+    className="mt-6 bg-white border border-orange-200 rounded-xl shadow-sm p-6
+               text-sm text-gray-800 leading-relaxed font-serif"
+  >
+    {/* Header */}
+    <div className="mb-4 text-center border-b pb-3">
+      <h2 className="text-lg font-bold">Shree Krishna Furniture Store</h2>
+      <p className="text-xs text-gray-500">
+        {new Date().toLocaleString()}
+      </p>
+    </div>
+
+    {/* Quote content */}
+    <div className="whitespace-pre-wrap space-y-3">
+      {aiQuote.split("\n").map((line, i) => (
+        <p key={i} className="mb-2">
+          {line}
+        </p>
+      ))}
+    </div>
+
+    {/* Footer */}
+    <div className="mt-6 border-t pt-3 flex justify-between items-center">
+      <p className="text-xs text-gray-500">
+        Note :- <br/>
+        * This is an AI generated Quotation so you have to see differences 
+        <br/>in between actual quotation and this quotation.<br/>
+        * Prices may vary after site inspection.
+      </p><br/>
+
+      <button
+        className="text-xs bg-orange-600 text-white px-3 py-1 rounded hover:bg-orange-700"
+        onClick={() => {
+          const printContents =
+            document.getElementById("ai-quote-card").innerHTML;
+          const originalContents = document.body.innerHTML;
+
+          document.body.innerHTML = printContents;
+          window.print();
+          document.body.innerHTML = originalContents;
+          window.location.reload();
+        }}
+      >
+        Download
+      </button>
+    </div>
+  </div>
+)}
+
+
+
+
         </div>
       </div>
     </div>

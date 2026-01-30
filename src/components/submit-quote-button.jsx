@@ -16,7 +16,7 @@ export default function SubmitButton({ formData }) {
           formData.requirements
         );
       }}
-      className="flex-1 bg-orange-600 text-white rounded-md py-2 text-xs font-medium hover:bg-orange-700"
+      className="w-full flex-1 bg-orange-600 text-white rounded-md py-2 text-xs font-medium hover:bg-orange-700"
     >
       Submit Quote Request
     </button>

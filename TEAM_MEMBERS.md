@@ -17,5 +17,7 @@ Add your name below to join the project:
 - Kaustubh Sarwade
 - Shambhavi Ratnaparkhi
 - Vijay More
-- Sachin Kute
+--end of list--
+- Vijay More
+<br>
 --end of list--

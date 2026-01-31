@@ -270,56 +270,7 @@ function QuoteForm() {
           personalized recommendations!
         </p>
 
-        {aiQuote && (
-          <div
-            id="ai-quote-card"
-            className="mt-6 bg-white border border-orange-200 rounded-xl shadow-sm p-6
-             text-sm text-gray-800 leading-relaxed font-serif"
-          >
-            {/* Header */}
-            <div className="mb-4 text-center border-b pb-3">
-              <h2 className="text-lg font-bold">
-                Shree Krishna Furniture Store
-              </h2>
-              <p className="text-xs text-gray-500">
-                {new Date().toLocaleString()}
-              </p>
-            </div>
-
-            {/* Quote content */}
-            <div className="whitespace-pre-wrap space-y-3">
-              {aiQuote.split("\n").map((line, i) => (
-                <p key={i} className="mb-2">
-                  {line}
-                </p>
-              ))}
-            </div>
-
-            {/* Footer */}
-            <div className="mt-6 border-t pt-3 flex justify-between items-center">
-              <p className="text-xs text-gray-500">
-                * This is an AI-generated quotation, so there is a chance to
-                vary main price.
-              </p>
-
-              <button
-                className="text-xs bg-orange-600 text-white px-3 py-2 rounded-md hover:bg-orange-700"
-                onClick={() => {
-                  const printContents =
-                    document.getElementById("ai-quote-card").innerHTML;
-                  const originalContents = document.body.innerHTML;
-
-                  document.body.innerHTML = printContents;
-                  window.print();
-                  document.body.innerHTML = originalContents;
-                  window.location.reload();
-                }}
-              >
-                Download
-              </button>
-            </div>
-          </div>
-        )}
+        
       </div>
     </div>
   );

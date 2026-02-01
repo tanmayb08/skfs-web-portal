@@ -1,19 +1,36 @@
+// app/api/search/route.js
+
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-export async function GET(req) {
-  const { searchParams } = new URL(req.url);
-  const query = searchParams.get("q");
+export async function GET(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const query = searchParams.get("q") || "";
 
-  const { data } = await supabase
-    .from("search_items")
-    .select("*")
-    .ilike("name", `%${query}%`)
-    .limit(5);
+    if (!query || query.trim().length === 0) {
+      return Response.json([]);
+    }
 
-  return Response.json(data || []);
+    // Multi-column fuzzy search
+    const { data, error } = await supabase
+      .from("search_items")
+      .select("*")
+      .or(`name.ilike.%${query}%,category.ilike.%${query}%`)
+      .limit(10);
+
+    if (error) {
+      console.error("Supabase error:", error);
+      return Response.json({ error: error.message }, { status: 500 });
+    }
+
+    return Response.json(data || []);
+  } catch (err) {
+    console.error("Search API error:", err);
+    return Response.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
